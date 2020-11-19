@@ -5,13 +5,13 @@ import dashboard from "./src/route/dashbord.js";
 import session from "express-session"
 
 
-const { host, port } = process.env;
+const { host, port ,secret} = process.env;
 //library
 const app = express();
 
 //middleware
 app.use(session({
-  secret: 'keyboard cat',
+  secret: secret,
   resave: false,
   saveUninitialized: false,
   cookie: { secure: true }
