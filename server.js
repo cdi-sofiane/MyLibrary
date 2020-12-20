@@ -1,27 +1,30 @@
-import express from "express";
+
 import { } from "./src/config/env.js";
-import checklogin from "./src/helper/checklogin.js";
+import express from "express";
+import connection from "./src/route/connection.js";
 import dashboard from "./src/route/dashbord.js";
-import session from "express-session"
+import session from "express-session";
+
+import nameResolver from './src/helper/nameResolver.js';
 
 
-const { host, port ,secret} = process.env;
+const { host, port, secret } = process.env;
 //library
 const app = express();
-
+app.disable('etag').disable('x-powered-by')
 //middleware
 app.use(session({
-  secret: secret,
-  resave: false,
-  saveUninitialized: false,
-  cookie: { secure: true }
+	key: "test",
+	secret: secret,
+	resave: false,
+	saveUninitialized: false,
+	cookie: { expires: 3600 * 60 * 1 * 100 },
+
 }))
 //route
-app.use(checklogin, (req, res, next) => {
-  next();
-});
+
+app.use("/connection", connection);
 app.use("/dashboard", dashboard);
-// c.end();
 app.listen(port, () => {
-  console.log(`serveur lancer sur l\'addresse ${host + port}`);
+	console.log(`serveur lancer sur l\'addresse ${host + port}`);
 });

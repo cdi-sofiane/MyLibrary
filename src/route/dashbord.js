@@ -1,9 +1,10 @@
-import router from "./default.js";
+import auth from "../helper/auth.js";
 import dashboardController from "../controller/dashboardController.js";
-import session from "express-session"
+import express from "express";
+let router = express.Router();
 
 
-router.get("/", dashboardController.find_all);
+router.get("/", auth,dashboardController.findAll);
 
-// router.post("/id", dashboardController.find_one);
+router.get("/:id", dashboardController.findOne);
 export default router;

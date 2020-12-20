@@ -1,7 +1,9 @@
-import {} from "./default.js";
+import express from "express";
+let router = express.Router();
 
-router.get("/connecion", (req, res) => {
-  res.send("connection");
+router.get("/", (req, res) => {
+  
+  res.send(req.session.user);
 });
 
 export default router;

@@ -1,8 +1,15 @@
+class dashboardController {
+  constructor() {
+    
+  }
+  findAll(req, res) {
+    console.log(req);
+    res.send(req.session.user);
+  };
+  findOne(req, res) {
+    console.log(req);
+    res.send(req.params.id);
+  };
+}
 
-const find_all = (req, res) => {
-
-
-  res.send(req.session.User);
-};
-
-export default { find_all };
+export default new dashboardController;
