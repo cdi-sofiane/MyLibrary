@@ -105,3 +105,6 @@ dist
 
 # visualcode
 .vscode
+
+#files
+src/upload/

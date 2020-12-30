@@ -2,21 +2,26 @@
 import { Model } from "./Model.js";
 export class AppUser extends Model {
 
+    constructor(_id) {
+        super();
 
-  constructor() {
-    super();
+        this.id = _id
+    }
+    set _id(id) {
+        this.id;
 
-  }
-  setId(id) {
-    this.id = id;
-    return this
-  }
+    }
+    get _id() {
+        this.id = this.id;
+        return this.id
+    }
 
-  async findOneById() {
-    let query = `SELECT * from app_user where id = ${this.id}`;
-    let objAppUser = await this.doQuery(query);
+    async findOneById(id) {
+        let query = `SELECT * from app_user where id = ${id}`;
+        let result = await this.doQuery(query);
+        // this.Id(result.id)
+        // console.log(this.Id)
+        return result;
 
-    return objAppUser;
-
-  }
+    }
 }

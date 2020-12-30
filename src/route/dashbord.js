@@ -4,7 +4,7 @@ import express from "express";
 let router = express.Router();
 
 
-router.get("/", auth,dashboardController.findAll);
+router.get("/", auth, dashboardController.findAll);
 
 router.get("/:id", dashboardController.findOne);
 export default router;

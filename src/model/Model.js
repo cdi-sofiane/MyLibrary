@@ -1,31 +1,40 @@
-import { promisify } from "util";
+
 import con from "../config/db.js";
 
-export class Model {
-  async doQuery(query) {
-    try {
+export class Model
+{
+  async doQuery(query)
+  {
+    try
+    {
 
       let dbQuery = await resolvePromiseRequest(query);
       // console.log(dbQuery );
       return dbQuery;
-    } catch (error) {
+    } catch (error)
+    {
       // return null;
-      console.error(error );
+      console.error(error);
     }
 
   }
 }
-async function resolvePromiseRequest(query) {
-  return new Promise((resolve, reject) => {
-    con.query(query, (err, res) => {
+async function resolvePromiseRequest(query)
+{
+  return new Promise((resolve, reject) =>
+  {
+    con.query(query, (err, res) =>
+    {
       if (err || res.length < 0) throw err;
       // if (res.length > 0) {
-      try {
+      try
+      {
 
         let string = JSON.stringify(res);
         let json = JSON.parse(string);
         resolve(json);
-      } catch (err) {
+      } catch (err)
+      {
 
         console.error(err + 'rororo');
       }
