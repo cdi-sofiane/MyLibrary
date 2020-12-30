@@ -107,4 +107,4 @@ dist
 .vscode
 
 #files
-src/upload/
+src/uploads/
