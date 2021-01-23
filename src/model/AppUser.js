@@ -4,7 +4,6 @@ export class AppUser extends Model {
 
     constructor(_id) {
         super();
-
         this.id = _id
     }
     set _id(id) {
