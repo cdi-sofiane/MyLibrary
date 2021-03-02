@@ -2,6 +2,25 @@
 import con from "../config/db.js";
 
 export class Model {
+  constructor() {
+    this.table = (this.constructor.name.toLowerCase())
+  }
+
+  async findOneById(id) {
+
+    let query = `SELECT * from ${this.table} where id = ${id}`;
+
+    let result = await this.doQuery(query);
+    console.log(this.table)
+
+    return result;
+  }
+  async findAll() {
+    let query = `SELECT * from libdomains right JOIN libbooks ON libbooks.libDomains_id = libdomains.id`;
+    let result = await this.doQuery(query);
+    console.log(this.table)
+    return result;
+  }
   async doQuery(query) {
     try {
 
@@ -20,7 +39,7 @@ async function resolvePromiseRequest(query) {
     try {
 
       con.query(query, (err, res) => {
-        if (err )throw err;
+        if (err) throw err;
         // if (res.length > 0) {
         try {
 

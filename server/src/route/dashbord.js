@@ -4,7 +4,7 @@ import express from "express";
 let router = express.Router();
 
 
-router.get("/", auth, Dashboard.findAll);
+router.get("/", Dashboard.findNovels);
 
-router.get("/:id", Dashboard.findOne);
+router.get("/:id", Dashboard.findAllNovels);
 export default router;

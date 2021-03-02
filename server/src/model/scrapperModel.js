@@ -1,4 +1,3 @@
-import { types } from "util";
 import { Model } from "./Model.js";
 export class scrapperModel extends Model {
     constructor() {
@@ -17,13 +16,13 @@ export class scrapperModel extends Model {
     set setbalise(balise) { this.balise = balise }
     get getbalise() { return this.balise }
 
-    set setfolders(folders) { this.folder = folders }
-    get getfolder() { return this.folders }
+    set setfolder(folder) { this.folder = folder }
+    get getfolder() { return this.folder }
 
     scrapp() {
 
     }
-    static url() {
+    url() {
         return this.domain + this.novel + this.chapter
     }
 

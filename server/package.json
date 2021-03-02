@@ -1,0 +1,28 @@
+{
+  "name": "novel-scrapper",
+  "version": "1.0.0",
+  "description": "recuperation de novel",
+  "type": "module",
+  "main": "nodemon server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js && ./front/yarn run start"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-mysql-session": "^2.1.5",
+    "express-session": "^1.17.1",
+    "fs": "0.0.1-security",
+    "mysql": "^2.18.1",
+    "path": "^0.12.7",
+    "puppeteer": "^5.5.0"
+  },
+  "devDependencies": {
+    "@types/node": "^14.14.7"
+  }
+}
