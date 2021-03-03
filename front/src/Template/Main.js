@@ -3,7 +3,7 @@ import { NovelCard } from '../Components/NovelCard';
 import { Footer } from './Footer';
 import { Header } from './Header';
 
-import '../../../public/css/style.css';
+import '../../src/style.css';
 
 
 export function Main() {
@@ -24,12 +24,14 @@ export function Main() {
     return <div className="body">
         <Header></Header>
         <div className="container" >
+            <div className="card-container">
 
-            {
-                novels.map(novel =>
-                    <NovelCard key={novel.id} name={novel.name} id={novel.id}></NovelCard>
-                )
-            }
+                {
+                    novels.map(novel =>
+                        <NovelCard key={novel.id} name={novel.name} id={novel.id}></NovelCard>
+                    )
+                }
+            </div>
         </div>
         <Footer></Footer>
     </div>

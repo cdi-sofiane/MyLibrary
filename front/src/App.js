@@ -2,7 +2,6 @@
 import './App.css';
 import { Main } from './Template/Main';
 
-import '../../public/css/style.css'
 
 
 function App() {

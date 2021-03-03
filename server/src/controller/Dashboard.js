@@ -3,27 +3,15 @@ import { scrapperModel } from '../model/scrapperModel.js'
 import { LibBooks } from '../model/LibBooks.js'
 import fs from 'fs'
 import puppeteer from 'puppeteer'
-import path from 'path'
-const __dirname = path.resolve();
 // const { __dirname } = process.env;
 
 
 class dashboardController {
-    constructor() {
 
-    }
     async findNovels(req, res) {
         let listObjNovels = await (new LibBooks()).findAll();
-        // console.log(listObjNovels);
-        // res.set('Content-Type', 'application/json');
-        // res.send(JSON.stringify(listObjNovels))
-        // const listnovels = [
-        //     { "id": 1, "name": "Leanne Graham" },
-        //     { "id": 2, "name": "Ervin Howell" },
-        //     { "id": 3, "name": "Clementine Bauch" },
-        //     { "id": 4, "name": "Patricia Lebsack" }
-        // ]
-        res.json({listnovels :listObjNovels})
+
+        res.json({ listnovels: listObjNovels })
 
     }
 

@@ -16,7 +16,7 @@ export class Model {
     return result;
   }
   async findAll() {
-    let query = `SELECT * from libdomains right JOIN libbooks ON libbooks.libDomains_id = libdomains.id`;
+    let query = `SELECT * from libdomains right JOIN libbooks ON libbooks.libDomains_id = libdomains.id order by libbooks.id`;
     let result = await this.doQuery(query);
     console.log(this.table)
     return result;
