@@ -4,7 +4,11 @@ import express from "express";
 let router = express.Router();
 
 
-router.get("/", Dashboard.findNovels);
+router.post("/", Dashboard.findNovels);
+// router.post("/", (req,res)=>{
+//     // console.log(res);
+//     console.log(req);
+// });
 
 router.get("/:id", Dashboard.findAllNovels);
 export default router;

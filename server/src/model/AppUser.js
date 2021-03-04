@@ -15,5 +15,5 @@ export class AppUser extends Model {
         return this.id
     }
 
-  
+
 }

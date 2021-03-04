@@ -44,7 +44,7 @@ export class LibBooks extends Model {
     }
 
     get getLibDomain() {
-        return this.libDomain= this.libDomain
+        return this.libDomain = this.libDomain
     }
     set setLibDomain(libDomainIds) {
         this.libDomain = libDomainIds

@@ -8,10 +8,19 @@ import puppeteer from 'puppeteer'
 
 class dashboardController {
 
-    async findNovels(req, res) {
-        let listObjNovels = await (new LibBooks()).findAll();
+   
 
-        res.json({ listnovels: listObjNovels })
+    async findNovels(req, res) {
+
+        try {
+            const page = req.body.page
+            let listObjNovels = await (new LibBooks()).findAll();
+            let result = { listnovels: listObjNovels, page }
+            res.json(result)
+        } catch (error) {
+            console.log(error)
+
+        }
 
     }
 

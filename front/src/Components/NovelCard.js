@@ -1,18 +1,27 @@
-
+import { useState, useEffect } from 'react'
 import "../../src/style.css"
-// import imgs from  "../assets/image/evil-disciple.jpg"
-
-
-// const images = require.context('../../server/assets/image/evil-disciple.jpg');
 const NovelCard = (props) => {
     const { id, name } = props;
+    const [image, imageState] = useState('')
 
-    // console.log(images);
-    var loadImage = require.resolve("./src/assets/image/evil-disciple.jpg",true);
-    return <div className="card"     >
-        <img alt='some value' src={loadImage} />
-        <span>{id}</span>
-        <span>{name}</span>
+    useEffect(() => {
+        try {
+            const pathimg = require(`../assets/image/${id}.jpg`).default
+            return imageState(pathimg)
+        } catch (error) {
+            const pathimg = require(`../assets/image/error_404.svg`).default
+            return imageState(pathimg)
+        }
+    }, [id])
+    return <div className="card">
+        <div className="card-header">
+            <img alt='some value' src={image} />
+        </div>
+        <div className="cardbody">
+            <span>{name}</span>
+        </div>
+        <div className="cardfooter"></div>
     </div>
 }
+// 
 export { NovelCard }
