@@ -7,15 +7,15 @@ import puppeteer from 'puppeteer'
 
 
 class dashboardController {
+    constructor() {
 
-   
-
+    }
     async findNovels(req, res) {
-
         try {
             const page = req.body.page
             let listObjNovels = await (new LibBooks()).findAll();
-            let result = { listnovels: listObjNovels, page }
+            let result = { listnovels: listObjNovels, page, logged: req.session.logged }
+           
             res.json(result)
         } catch (error) {
             console.log(error)
@@ -23,25 +23,16 @@ class dashboardController {
         }
 
     }
+    // async 
 
     findAllNovels(req, res) {
-        // console.log(req);
-        // novel/emperors-domination/emperor-chapter-3385
-        // https://boxnovel.net/301257/turns-out-im-a-great-cultivator/chapter-
         let scrapper = new scrapperModel()
         scrapper.setdomain = "https://boxnovel.net/301257/"
-        // scrapper.let novel = "emperors-domination/"
         scrapper.setnovel = "turns-out-im-a-great-cultivator/"
-        // scrapper.let chapter = "emperor-chapter-"
         scrapper.setchapter = "chapter-"
-        // scrapper.let balise = "div#chapter-content"
-        // scrapper.setbalise = "div#chapter-content"
         scrapper.setbalise = ".text-content"
-        // scrapper.let folder = "./src/uploads/emperordomination/"
         scrapper.setfolder = `./src/uploads/${scrapper.getnovel}/`
-        // scrapper.let domain = "https://www.wuxiaworld.com/novel/"
         let url = scrapper.url()
-        // console.log(scrapper.getfolder);
         let message = []
         let files = []
         try {
@@ -51,7 +42,6 @@ class dashboardController {
                 let limit = 0;
                 for (let index = 492; index < 5000; index++) {
                     let filePath = scrapper.getfolder + index + '.html';
-                    // console.log(filePath);
                     try {
                         await page.goto(`${url + index}`);
 
@@ -59,14 +49,8 @@ class dashboardController {
                         let title = await page.$eval('title', async (e) => {
                             return e.innerText;
                         })
-                        // try {
                         await page.waitForSelector(scrapper.getbalise, { timeout: 1000 })
-                        // } catch (error) {
                         message = { 'message': "test" }
-                        //     res.send(`${index + files}<br>`)
-                        //     break
-                        // }
-                        // console.log(message);
 
                         let body = await page.$eval(scrapper.getbalise, async (e) => {
 
@@ -75,7 +59,6 @@ class dashboardController {
 
                         console.log(title)
                         if ((body.length < 5000)) {
-                            // console.log(body.length + '\n' + scrapper.getbalise);
                             message = { 'message': "aucun chapitre trouver" }
                             limit += 1;
                             if (limit > 10) {
@@ -99,18 +82,14 @@ class dashboardController {
 
                 }
                 await browser.close();
-                // res.send(files)
                 return message
             })
         } catch (error) {
-            // console.log(message);
-            // return message
         }
 
 
     };
     findOne(req, res) {
-        // console.log(req);
         res.send(JSON.stringify(req.session));
     };
 }

@@ -1,5 +1,5 @@
 
-import con from "../config/db.js";
+import { connection } from "../config/db.js";
 
 export class Model {
   constructor() {
@@ -9,27 +9,34 @@ export class Model {
   async findOneById(id) {
 
     let query = `SELECT * from ${this.table} where id = ${id}`;
-
     let result = await this.doQuery(query);
-    console.log(this.table)
 
     return result;
   }
   async findAll() {
     let query = `SELECT * from libdomains right JOIN libbooks ON libbooks.libDomains_id = libdomains.id order by libbooks.id`;
     let result = await this.doQuery(query);
-    console.log(this.table)
+    return result;
+  }
+  async findUsersAll() {
+    let query = `SELECT * from ${this.table}`;
+    let result = await this.doQuery(query);
+   
+    return result;
+  }
+  async findOneByParams(objAppUser) {
+    let query = `SELECT * from ${this.table} where mail = "${objAppUser.getMail}" and password ="${objAppUser.getPassword}" `;
+    let result = await this.doQuery(query);
     return result;
   }
   async doQuery(query) {
     try {
 
       let dbQuery = await resolvePromiseRequest(query);
-      // console.log(dbQuery );
       return dbQuery;
     } catch (error) {
-      // return null;
       console.error(error);
+      return [];
     }
 
   }
@@ -38,21 +45,17 @@ async function resolvePromiseRequest(query) {
   return new Promise((resolve, reject) => {
     try {
 
-      con.query(query, (err, res) => {
+      connection.query(query, (err, res) => {
         if (err) throw err;
-        // if (res.length > 0) {
         try {
 
           let string = JSON.stringify(res);
           let json = JSON.parse(string);
           resolve(json);
         } catch (err) {
-
           console.error(err + 'rororo');
         }
-        // } else {
-        //  resolve(err);
-        // }
+
       });
     } catch (error) {
       console.log('toto');

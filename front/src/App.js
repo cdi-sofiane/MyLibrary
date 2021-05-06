@@ -1,4 +1,5 @@
 
+import { BrowserRouter as Router } from 'react-router-dom';
 import './App.css';
 import { Main } from './Template/Main';
 
@@ -6,9 +7,15 @@ import { Main } from './Template/Main';
 
 function App() {
   return (
+
     <div className="App">
-      <Main></Main>
+      <Router>
+        
+          <Main></Main>
+        
+      </Router>
     </div>
+
   );
 }
 

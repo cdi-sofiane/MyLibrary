@@ -1,36 +1,51 @@
 import express from "express";
-import { AppUser } from "../model/AppUser.js";
+import { AppUsers } from "../model/AppUsers.js";
 let router = express.Router();
 
-export default async (req, res, next) => {
-    // console.log()
-    var objAppUser = new AppUser(1);
-    if (req.session.loggedIn == true) {
-        console.log('logged');
-        console.log(req.session.user);
-        next()
-    } else {
 
+export const accountLogin = async (req, res, next) => {
 
-        let objRes = await objAppUser.findOneById(objAppUser.id);
-        req.session.user = objRes
-        console.log(objRes.length);
-        if (objRes.length > 0) {
-            
-            req.session.loggedIn = true
-            console.log('logged true');
-            next()
-            // return
-        }else{
+    req.session.logged = ''
+    try {
+        const { mail, password } = req.body
+        let objAppUsers = new AppUsers();
+        objAppUsers.setMail = mail
+        objAppUsers.setPassword = password
+        let objAppUserLogged = await objAppUsers.findOneByParams(objAppUsers);
+        if (objAppUserLogged.length > 0) {
 
-            console.log('logged false');
-            res.redirect('dashboard/1');
+            req.session.logged = true
+            req.session.user = { mail: objAppUserLogged[0].mail, pwd: objAppUserLogged[0].password }
+
+            // await req.session.save()
+            return next()
+        } else {
+            req.session.logged = false
+            return next()
         }
-      
+    } catch (error) {
+        console.log(error);
+    }
+
+}
+
+export const auth = async (req, res, next) => {
+
+    let isLogged = {}
+    console.log(req.session);
+    try {
+        if (!req.session.logged) {
+            req.session.logged = false
+            isLogged = { logged: req.session.logged }
+            return res.json(isLogged)
+        }
+        return next()
+
+    } catch (error) {
+        console.log(error);
+
     }
 
 
-};
+}
 
-
-// export default router;

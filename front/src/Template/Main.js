@@ -1,56 +1,64 @@
-import React, { useEffect, useState } from 'react';
-import { NovelCard } from '../Components/NovelCard';
-import { Footer } from './Footer';
-import { Header } from './Header';
+import React, { useEffect, useMemo, useState } from 'react';
+import { Route, Switch } from "react-router-dom";
+import { LoginCard } from '../Connection/LoginCard';
+import { Dashboard } from '../Dashboard/Dashboard';
+import { NovelCatalogs } from '../Novels/NovelCatalogs';
+import { ProtectedRoute } from '../Components/ProtectedRoute';
+import { ListUsersComponent } from '../Components/ListUsersComponent';
+
 
 import '../../src/style.css';
+import { UserSessionContext } from './UserSessionContext';
 
 
-export function Main() {
-    const [novels, novelsState] = useState([])
-    const [page, pageState] = useState('51')
+
+function Main() {
+
+    const [isLoggedIn, setLogginIn] = useState(JSON.parse(localStorage.getItem('isLoggedIn')))
+    const value = useMemo(() => ({ isLoggedIn, setLogginIn }), [isLoggedIn, setLogginIn])
+
+
     useEffect(() => {
         (async () => {
             try {
-                let jsonRes = await fetchNoveles(page)
-                // let objstate = [
-                    pageState(jsonRes.page)
-                    novelsState(jsonRes.listnovels)
-                // ]
-
-                // return objstate;
+                let result = await fetchSessionUser()
+                localStorage.setItem('isLoggedIn', result.logged)
+                setLogginIn(JSON.parse(localStorage.getItem('isLoggedIn')))
+                return result
             } catch (error) {
-                console.error(error)
+                console.log(error);
             }
-
         })()
-    }, [page])
+
+    }, [isLoggedIn])
+
+
 
     return <div className="body">
-        <Header></Header>
-        <div className="container" >
-            <div className="card-container">
+        <UserSessionContext.Provider value={value}  >
+            <Switch>
+                <Route exact path='/' component={LoginCard} />
+                <ProtectedRoute path='/dashboard' component={Dashboard} />
+                <ProtectedRoute path='/novel' component={NovelCatalogs} />
+                <ProtectedRoute path='/users' component={ListUsersComponent} />
+                <Route path='*' component={() => "404 page not found"} />
 
-                {
-                    novels.map(novel =>
+            </Switch>
+        </UserSessionContext.Provider>
 
-                        <NovelCard key={novel.id} name={novel.name} id={novel.id}></NovelCard>
-                    )
-                }
-            </div>
-        </div>
-        <Footer></Footer>
-    </div>
+    </div >
+
 
 
 }
 
-let fetchNoveles = async (page) => {
-    const fetchedData = await fetch('/dashboard', {
+let fetchSessionUser = async () => {
+    let result = await fetch('/checksession', {
         method: 'POST',
+        credentials: 'include',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ page })
     })
-    return await fetchedData.json()
-
+    return await result.json()
 }
+export { Main }
+

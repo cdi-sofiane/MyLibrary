@@ -1,14 +1,11 @@
-import auth from "../helper/auth.js";
-import Dashboard from "../controller/Dashboard.js";
 import express from "express";
+import { auth } from "../helper/auth.js";
+import dashboardController from "../controller/DashboardControlleur.js"
 let router = express.Router();
 
 
-router.post("/", Dashboard.findNovels);
-// router.post("/", (req,res)=>{
-//     // console.log(res);
-//     console.log(req);
-// });
+router.post("/", auth, dashboardController.findNovels);
 
-router.get("/:id", Dashboard.findAllNovels);
+
+router.get("/:id", auth, dashboardController.findAllNovels);
 export default router;
