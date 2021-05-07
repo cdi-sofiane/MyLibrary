@@ -1,6 +1,6 @@
 import { } from "../config/env.js";
-import { scrapperModel } from '../model/scrapperModel.js'
-import { LibBooks } from '../model/LibBooks.js'
+import { scrapperModel } from '../model/entity/scrapperModel.js'
+import { LibBooks } from '../model/entity/LibBooks.js'
 import fs from 'fs'
 import puppeteer from 'puppeteer'
 // const { __dirname } = process.env;

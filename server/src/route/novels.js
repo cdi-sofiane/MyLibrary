@@ -7,6 +7,6 @@ let router = express.Router();
 router.post("/", auth, novelsController.findNovels);
 
 
-router.get("/:id", auth, novelsController.findNovelChapters);
+router.get("/:id", auth, novelsController.findChapters);
 
 export default router;

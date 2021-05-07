@@ -1,5 +1,5 @@
 import { } from "../config/env.js";
-import { AppUsers } from '../model/AppUsers.js'
+import { AppUsers } from '../model/entity/AppUsers.js'
 
 
 class ConnectionControlleur {

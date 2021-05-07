@@ -27,6 +27,7 @@ export const NovelCatalogs = (props) => {
                 if (!result.logged) {
                     return history.push('/')
                 }
+                console.log(result.listnovels);
                 const json = result.listnovels;
                 setBooks(json)
                 localStorage.setItem('isLoggedIn', result.logged)

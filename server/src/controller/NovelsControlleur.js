@@ -1,5 +1,6 @@
 import { } from "../config/env.js";
-import { LibBooks } from '../model/LibBooks.js'
+import { LibBooks } from '../model/entity/LibBooks.js'
+import ChapterRepository from '../model/ChapterRepository.js'
 class NovelsControlleur {
     constructor() {
 
@@ -17,14 +18,13 @@ class NovelsControlleur {
         }
 
     }
-    async findNovelChapters(req, res) {
-        console.log(req.body);
+    async findChapters(req, res) {
+        let { id } = req.params
+        let result = []
         try {
-            const page = req.body.page
-            let listObjNovels = await (new LibBooks()).findAll();
-            let result = { listnovels: listObjNovels, page, logged: req.session.logged }
+            result = await ChapterRepository.findChapterByNovel(id)
 
-            res.json(result)
+            res.json({ 'listchapter': result })
         } catch (error) {
             console.log(error)
 

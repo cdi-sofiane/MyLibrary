@@ -1,5 +1,5 @@
 import express from "express";
-import { AppUsers } from "../model/AppUsers.js";
+import { AppUsers } from "../model/entity/AppUsers.js";
 let router = express.Router();
 
 
@@ -11,6 +11,7 @@ export const accountLogin = async (req, res, next) => {
         let objAppUsers = new AppUsers();
         objAppUsers.setMail = mail
         objAppUsers.setPassword = password
+        
         let objAppUserLogged = await objAppUsers.findOneByParams(objAppUsers);
         if (objAppUserLogged.length > 0) {
 

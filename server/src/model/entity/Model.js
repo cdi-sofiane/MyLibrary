@@ -1,5 +1,5 @@
 
-import { connection } from "../config/db.js";
+import { connection } from "../../config/db.js";
 
 export class Model {
   constructor() {
@@ -21,11 +21,12 @@ export class Model {
   async findUsersAll() {
     let query = `SELECT * from ${this.table}`;
     let result = await this.doQuery(query);
-   
+
     return result;
   }
-  async findOneByParams(objAppUser) {
-    let query = `SELECT * from ${this.table} where mail = "${objAppUser.getMail}" and password ="${objAppUser.getPassword}" `;
+  
+  async findOneByParams( obj ) {
+    let query = `SELECT * from ${this.table} where mail = "${obj.getMail}" and password ="${obj.getPassword}" `;
     let result = await this.doQuery(query);
     return result;
   }

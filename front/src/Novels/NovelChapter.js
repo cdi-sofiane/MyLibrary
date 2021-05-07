@@ -1,31 +1,37 @@
 import React, { useEffect, useState } from 'react'
-
+import { Link } from 'react-router-dom';
+// let chapters = [{ 'chapter': "1", 'name': 'one' }, { 'chapter': "2", 'name': 'deux' }, { 'chapter': "3", 'name': 'trois' }, { 'chapter': "4", 'name': 'quatre' },]
 
 const NovelChapter = (props) => {
     const novel = props.match.params.id;
-    console.log(novel);
+
     const [novelId, setNovelId] = useState(novel)
+    const [listChapter, setListChapter] = useState([])
     useEffect(() => {
         (async () => {
             try {
-                let listChapter = await fetchNovelesChapter(novelId)
+                let result = await fetchNovelesChapter(novelId)
+               let json = result.listchapter
+                // JSON.stringify(listChapter)
+                setListChapter(json)
             } catch (error) {
 
             }
         })()
-        return () => {
-            // cleanup
-        }
+
     }, [novelId])
 
     return (
         <div>
+            {listChapter.map((item, i) =>
+                <Link key={i} to={`/${item.id}`} >{item.title}</Link>
+            )}
 
         </div>
     )
 }
 let fetchNovelesChapter = async (id) => {
-    console.log(id);
+   
     const fetchedData = await fetch('/novels/' + id, {
         method: 'GET',
         credentials: 'include',
@@ -37,4 +43,4 @@ let fetchNovelesChapter = async (id) => {
 
 }
 
-export default NovelChapter     
+export default NovelChapter
