@@ -11,7 +11,7 @@ const NovelChapter = (props) => {
         (async () => {
             try {
                 let result = await fetchNovelesChapter(novelId)
-               let json = result.listchapter
+                let json = result.listchapter
                 // JSON.stringify(listChapter)
                 setListChapter(json)
             } catch (error) {
@@ -31,7 +31,7 @@ const NovelChapter = (props) => {
     )
 }
 let fetchNovelesChapter = async (id) => {
-   
+
     const fetchedData = await fetch('/novels/' + id, {
         method: 'GET',
         credentials: 'include',
