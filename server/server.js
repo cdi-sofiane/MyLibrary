@@ -11,7 +11,7 @@ import session from "express-session";
 const __dirname = path.resolve();
 
 
-const { host, port, secret, NODE_ENV } = process.env;
+const { host, port, secret, NODE_ENV ,key } = process.env;
 const app = express();
 app.use(cors({
   origin: ['http://localhost:3000'],
@@ -25,7 +25,7 @@ app.disable('etag').disable('x-powered-by')
 
 
 app.use(session({
-  key: "poc",
+  key: key,
   secret: secret,
   resave: false,
   store: sessionStore,
